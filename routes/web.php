@@ -42,19 +42,19 @@ Route::get("/helloworld", function () {
 // Route Parameter
 Route::get("/products/{id}", function ($productId) {
     return "Products : $productId";
-});
+})->name("product.detail");
 
 Route::get("/products/{product}/items/{item}", function ($productId, $itemId) {
     return "Products : $productId, Items : $itemId";
-});
+})->name("product.item.detail");
 
 Route::get("/categories/{id}", function ($categoryId) {
     return "Category : $categoryId";
-})->where("id", "[0-9]+");
+})->where("id", "[0-9]+")->name("categori.detail");
 
 Route::get("/users/{id?}", function (string $userId = "404") {
     return "User : $userId";
-});
+})->name("user.detail");
 
 Route::get("/conflict/{name}", function ($name) {
     return "Conflict $name";
