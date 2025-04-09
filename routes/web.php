@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HelloController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -63,3 +64,6 @@ Route::get("/conflict/{name}", function ($name) {
 Route::get("/conflict/john", function () {
     return "Conflict John Doe";
 });
+
+
+Route::get("/controller/hello/{name?}", [HelloController::class, 'hello']);
