@@ -37,3 +37,29 @@ Route::get("/hello-again", function () {
 Route::get("/helloworld", function () {
     return view("hello.world", ["name" => config("myconfig.author.first")]);
 });
+
+
+// Route Parameter
+Route::get("/products/{id}", function ($productId) {
+    return "Products : $productId";
+});
+
+Route::get("/products/{product}/items/{item}", function ($productId, $itemId) {
+    return "Products : $productId, Items : $itemId";
+});
+
+Route::get("/categories/{id}", function ($categoryId) {
+    return "Category : $categoryId";
+})->where("id", "[0-9]+");
+
+Route::get("/users/{id?}", function (string $userId = "404") {
+    return "User : $userId";
+});
+
+Route::get("/conflict/{name}", function ($name) {
+    return "Conflict $name";
+});
+
+Route::get("/conflict/john", function () {
+    return "Conflict John Doe";
+});
