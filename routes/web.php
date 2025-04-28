@@ -6,6 +6,8 @@ use App\Http\Controllers\HelloController;
 use App\Http\Controllers\InputController;
 use App\Http\Controllers\RedirectController;
 use App\Http\Controllers\ResponseController;
+use App\Http\Middleware\ContohMiddleware;
+use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -85,7 +87,7 @@ Route::post("/input/filter/only", [InputController::class, 'filterOnly']);
 Route::post("/input/except/only", [InputController::class, 'exceptOnly']);
 Route::post("/input/filter/merge", [InputController::class, 'filterMerge']);
 
-Route::post("/file/upload", [FileController::class, "upload"]);
+Route::post("/file/upload", [FileController::class, "upload"])->withoutMiddleware([VerifyCsrfToken::class]);
 
 Route::get("/response/hello", [ResponseController::class, "response"]);
 Route::get("/response/header", [ResponseController::class, "header"]);
@@ -104,3 +106,13 @@ Route::get("/redirect/name", [RedirectController::class, "redirectName"]);
 Route::get("/redirect/name/{name}", [RedirectController::class, "redirectHello"])->name("redirect-hello");
 Route::get("/redirect/action", [RedirectController::class, "redirectAction"]);
 Route::get("/redirect/youtube", [RedirectController::class, "away"]);
+
+// Middleware
+Route::get("/middleware/api", function () {
+    return "OK";
+    // })->middleware(ContohMiddleware::class);
+})->middleware(['contoh:pzn,401']);
+
+Route::get("/middleware/group", function () {
+    return "GROUP";
+})->middleware('pzn');
