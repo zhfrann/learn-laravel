@@ -92,14 +92,25 @@ Route::post("/file/upload", [FileController::class, "upload"])->withoutMiddlewar
 
 Route::get("/response/hello", [ResponseController::class, "response"]);
 Route::get("/response/header", [ResponseController::class, "header"]);
-Route::get("/response/type/view", [ResponseController::class, "responseView"]);
-Route::get("/response/type/json", [ResponseController::class, "responseJson"]);
-Route::get("/response/type/file", [ResponseController::class, "responseFile"]);
-Route::get("/response/type/download", [ResponseController::class, "responseDownload"]);
+// Route::get("/response/type/view", [ResponseController::class, "responseView"]);
+// Route::get("/response/type/json", [ResponseController::class, "responseJson"]);
+// Route::get("/response/type/file", [ResponseController::class, "responseFile"]);
+// Route::get("/response/type/download", [ResponseController::class, "responseDownload"]);
+Route::prefix("/response/type")->group(function () {
+    Route::get("/view", [ResponseController::class, "responseView"]);
+    Route::get("/json", [ResponseController::class, "responseJson"]);
+    Route::get("/file", [ResponseController::class, "responseFile"]);
+    Route::get("/download", [ResponseController::class, "responseDownload"]);
+});
 
-Route::get("/cookie/set", [CookieController::class, "createCookie"]);
-Route::get("/cookie/get", [CookieController::class, "getCookie"]);
-Route::get("/cookie/clear", [CookieController::class, "clearCookie"]);
+// Route::get("/cookie/set", [CookieController::class, "createCookie"]);
+// Route::get("/cookie/get", [CookieController::class, "getCookie"]);
+// Route::get("/cookie/clear", [CookieController::class, "clearCookie"]);
+Route::controller(CookieController::class)->group(function () {
+    Route::get("/cookie/set", "createCookie");
+    Route::get("/cookie/get", "getCookie");
+    Route::get("/cookie/clear", 'clearCookie');
+});
 
 Route::get("/redirect/to", [RedirectController::class, "redirectTo"]);
 Route::get("/redirect/from", [RedirectController::class, "redirectFrom"]);
@@ -109,14 +120,23 @@ Route::get("/redirect/action", [RedirectController::class, "redirectAction"]);
 Route::get("/redirect/youtube", [RedirectController::class, "away"]);
 
 // Middleware
-Route::get("/middleware/api", function () {
-    return "OK";
-    // })->middleware(ContohMiddleware::class);
-})->middleware(['contoh:pzn,401']);
+// Route::get("/middleware/api", function () {
+//     return "OK";
+// //})->middleware(ContohMiddleware::class);
+// })->middleware(['contoh:pzn,401']);
 
-Route::get("/middleware/group", function () {
-    return "GROUP";
-})->middleware('pzn');
+// Route::get("/middleware/group", function () {
+//     return "GROUP";
+// })->middleware('pzn');
+Route::middleware(['contoh:pzn,401'])->prefix('/middleware')->group(function () {
+    Route::get("/api", function () {
+        return "OK";
+    });
+
+    Route::get("/group", function () {
+        return "GROUP";
+    });
+});
 
 
 // Csrf
