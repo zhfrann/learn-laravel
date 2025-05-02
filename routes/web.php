@@ -142,3 +142,24 @@ Route::middleware(['contoh:pzn,401'])->prefix('/middleware')->group(function () 
 // Csrf
 Route::get("/form", [FormController::class, "form"]);
 Route::post("/form", [FormController::class, "submitForm"]);
+
+
+// URL Generator
+Route::get('/url/current', function () {
+    // return \Illuminate\Support\Facades\URL::current();
+    // return url()->current();
+    return \Illuminate\Support\Facades\URL::full();
+});
+
+// Route::get("/redirect/name/{name}", [RedirectController::class, "redirectHello"])->name("redirect-hello");
+Route::get('/url/named', function () {
+    // return \Illuminate\Support\Facades\URL::route('redirect-hello', ['name' => 'John']);
+    // return route('redirect-hello', ['name' => 'John']);
+    return url()->route('redirect-hello', ['name' => 'John']);
+});
+
+// Route::get("/form", [FormController::class, "form"]);
+Route::get('/url/action', function () {
+    // return \Illuminate\Support\Facades\URL::action([FormController::class, 'form'], []);
+    return url()->action([FormController::class, 'form'], []);
+});
