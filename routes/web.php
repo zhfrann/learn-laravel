@@ -169,3 +169,20 @@ Route::get('/url/action', function () {
 // Session
 Route::get('/session/create', [SessionController::class, 'createSession']);
 Route::get('/session/get', [SessionController::class, 'getSession']);
+
+
+
+// Error Handler
+Route::get('/error/sample', function () {
+    throw new Exception("Sample Error");
+});
+
+Route::get('/error/manual', function () {
+    report(new Exception(("Sample Error")));
+    return "OK - error manual";
+});
+
+Route::get('/error/validation', function () {
+    throw new \App\Exceptions\ValidationException("Validation Error");  //This exception will be ignore the reportable() function
+    // because the class is registered in $dontReport properties in \App\Exception\Handler.php
+});
