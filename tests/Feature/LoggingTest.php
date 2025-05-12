@@ -38,4 +38,15 @@ class LoggingTest extends TestCase
 
         self::assertTrue(true);
     }
+
+    public function testLoggingWithSelectedChannel()
+    {
+        $stderrLogger = Log::channel('stderr');
+
+        $stderrLogger->error("This is error log message from stderr channel");
+
+        Log::warning("This is warning log message from default channel");
+
+        self::assertTrue(true);
+    }
 }
