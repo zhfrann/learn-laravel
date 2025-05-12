@@ -96,6 +96,18 @@ return [
             ],
         ],
 
+        // Manually created this channel
+        'file' => [
+            'driver' => 'monolog',
+            'level' => env('LOG_LEVEL', 'debug'),
+            'handler' => StreamHandler::class,
+            'formatter' => env('LOG_STDERR_FORMATTER'),
+            'with' => [
+                // 'stream' => 'php://stderr',
+                'stream' => storage_path("logs/application.log"),
+            ],
+        ],
+
         'syslog' => [
             'driver' => 'syslog',
             'level' => env('LOG_LEVEL', 'debug'),
