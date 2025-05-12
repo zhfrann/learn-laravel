@@ -1,0 +1,41 @@
+<?php
+
+namespace Tests\Feature;
+
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Log;
+use Tests\TestCase;
+
+class LoggingTest extends TestCase
+{
+    public function testLogging()
+    {
+        Log::info("Hello with level Info");
+        Log::warning("Hello with level Warning");
+        Log::error("Hello with level Error");
+        Log::critical("Hello with level Critical");
+
+        self::assertTrue(true);
+    }
+
+    public function testLoggingContext()
+    {
+        Log::info("Hello with level Info with Context", ["name" => "john"]);
+        Log::warning("Hello with level Warning with Context", ["name" => "john"]);
+        Log::critical("Hello with level Critical with Context", ["name" => "john"]);
+
+        self::assertTrue(true);
+    }
+
+    public function testLoggingWithContext()
+    {
+        Log::withContext(["name" => "John"]);
+
+        Log::info("Hello with level Info with Context");
+        Log::warning("Hello with level Warning with Context");
+        Log::critical("Hello with level Critical with Context");
+
+        self::assertTrue(true);
+    }
+}
