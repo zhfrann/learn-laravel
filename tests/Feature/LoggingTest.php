@@ -61,4 +61,16 @@ class LoggingTest extends TestCase
 
         self::assertTrue(true);
     }
+
+    public function testLoggingWithFileJsonHandler()
+    {
+        $fileLogger = Log::channel('fileWithJsonFormat');
+        $fileLogger->info("Info log message from file channel (This should appear in logs/application.log)");
+        $fileLogger->warning("Warning log message from file channel (This should appear in logs/application.log)");
+
+        Log::info("Info log message from default (stack) channel");
+        Log::warning("Warning log message from default (stack) channel");
+
+        self::assertTrue(true);
+    }
 }

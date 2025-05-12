@@ -108,6 +108,19 @@ return [
             ],
         ],
 
+        // Manually created this channel
+        'fileWithJsonFormat' => [
+            'driver' => 'monolog',
+            'level' => env('LOG_LEVEL', 'debug'),
+            'handler' => StreamHandler::class,
+            // 'formatter' => env('LOG_STDERR_FORMATTER'),
+            'formatter' => \Monolog\Formatter\JsonFormatter::class,
+            'with' => [
+                // 'stream' => 'php://stderr',
+                'stream' => storage_path("logs/application.log"),
+            ],
+        ],
+
         'syslog' => [
             'driver' => 'syslog',
             'level' => env('LOG_LEVEL', 'debug'),
